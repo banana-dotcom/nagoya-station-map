@@ -6,7 +6,6 @@
 <title>名古屋圏 駅別乗降客数（2024年）</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
-<script src="https://unpkg.com/leaflet-rotate/dist/leaflet-rotate-src.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif; }
@@ -45,23 +44,11 @@ body { font-family: 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif; }
   }
   #title-bar { font-size: 12px; padding: 6px 14px; }
 }
-.leaflet-pane, .leaflet-pane > svg, .leaflet-pane > canvas {
-  will-change: transform;
-}
-#reset-north {
-  position: fixed; top: 80px; right: 10px; z-index: 1000;
-  background: #fff; border: 2px solid rgba(0,0,0,0.25); border-radius: 4px;
-  width: 36px; height: 36px; font-size: 20px; line-height: 1;
-  cursor: pointer; display: none; box-shadow: 0 1px 5px rgba(0,0,0,0.22);
-  padding: 0;
-}
-#reset-north:hover { background: #f4f4f4; }
 </style>
 </head>
 <body>
-<div id="title-bar">名古屋圏 駅別乗降客数（2024年）　722駅表示</div>
+<div id="title-bar">名古屋圏 駅別乗降客数（2024年）</div>
 <div id="map"></div>
-<button id="reset-north" title="北向きに戻す">⬆</button>
 <div id="legend">
   <h4>乗降客数（人/日）</h4>
   <div class="leg-row" data-step="0">
@@ -108,7 +95,7 @@ var STEPS = [
   [     0, '#313695',  4]
 ];
 
-var map = L.map('map', { preferCanvas: true, rotate: true, touchRotate: true, rotateControl: false }).setView([35.18, 136.91], 11);
+var map = L.map('map', { preferCanvas: true }).setView([35.18, 136.91], 11);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   maxZoom: 19
@@ -211,15 +198,6 @@ document.querySelectorAll('.leg-row').forEach(function(row) {
 });
 
 document.getElementById('leg-reset').addEventListener('click', showAll);
-
-var resetNorthBtn = document.getElementById('reset-north');
-map.on('rotate', function() {
-  var b = map.getBearing ? map.getBearing() : 0;
-  resetNorthBtn.style.display = (Math.abs(b) > 0.5) ? 'block' : 'none';
-});
-resetNorthBtn.addEventListener('click', function() {
-  map.setBearing(0);
-});
 
 </script>
 </body>
