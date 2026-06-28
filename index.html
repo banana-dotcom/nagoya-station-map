@@ -6,7 +6,7 @@
 <title>名古屋圏 駅別乗降客数（2024年）</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet-rotate@0.3.1/dist/leaflet-rotate-src.js"></script>
+<script src="https://unpkg.com/leaflet-rotate/dist/leaflet-rotate-src.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif; }
@@ -124,6 +124,10 @@ if (NAGOYA_BOUNDARY) {
 var allMarkers = [];
 var selectedSteps = new Set();
 
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 function getStepIdx(p) {
   for (var i = 0; i < STEPS.length; i++) {
     if (p >= STEPS[i][0]) return i;
@@ -136,7 +140,7 @@ stations.forEach(function(s) {
   var step   = STEPS[si];
   var color  = step[1];
   var radius = step[2];
-  var tooltipContent = s.n + '駅';
+  var tooltipContent = esc(s.n) + '駅';
   var tooltipOpts = { direction: 'top', offset: [0, -(radius + 2)] };
   var m = L.circleMarker([s.la, s.lo], {
     radius: radius,
@@ -149,14 +153,14 @@ stations.forEach(function(s) {
   .bindPopup(
     '<div style="font-family:sans-serif;min-width:210px;">' +
     '<div style="font-size:16px;font-weight:bold;border-bottom:2px solid #333;' +
-    'margin-bottom:7px;padding-bottom:4px;">' + s.n + '駅</div>' +
+    'margin-bottom:7px;padding-bottom:4px;">' + esc(s.n) + '駅</div>' +
     (s.m ? '<div style="color:#888;font-size:11px;margin-bottom:6px;">※複数事業者の乗降客数合算</div>' : '') +
     '<table style="border-collapse:collapse;width:100%;font-size:13px;">' +
     (s.m ? '' :
       '<tr><td style="color:#666;padding:2px 8px 2px 0;white-space:nowrap;">運営会社</td>' +
-      '<td>' + s.c + '</td></tr>' +
+      '<td>' + esc(s.c) + '</td></tr>' +
       '<tr><td style="color:#666;padding:2px 8px 2px 0;white-space:nowrap;">路線名</td>' +
-      '<td>' + s.r + '</td></tr>'
+      '<td>' + esc(s.r) + '</td></tr>'
     ) +
     '</table>' +
     '<div style="margin-top:8px;border-top:1px solid #ddd;padding-top:6px;">' +
