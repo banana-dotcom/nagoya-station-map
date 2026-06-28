@@ -99,7 +99,8 @@ var STEPS = [
 var map = L.map('map', {
   rotate: true,
   touchRotate: true,
-  rotateControl: { closeOnZeroBearing: false }
+  rotateControl: { closeOnZeroBearing: false },
+  preferCanvas: true
 }).setView([35.18, 136.91], 11);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
