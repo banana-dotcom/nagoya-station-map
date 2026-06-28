@@ -35,6 +35,15 @@ body { font-family: 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif; }
   border: 1px solid rgba(0,0,0,0.18);
 }
 .leg-txt { font-size: 12px; white-space: nowrap; }
+.popup-box { font-family: sans-serif; }
+.popup-name { font-size: 15px; font-weight: bold; border-bottom: 2px solid #333; margin-bottom: 6px; padding-bottom: 4px; }
+.popup-merged { color: #888; font-size: 11px; margin-bottom: 5px; }
+.popup-tbl { border-collapse: collapse; width: 100%; font-size: 13px; }
+.popup-lbl { color: #666; padding: 2px 8px 2px 0; white-space: nowrap; }
+.popup-pax { margin-top: 7px; border-top: 1px solid #ddd; padding-top: 5px; }
+.popup-pax-yr { color: #333; font-size: 12px; }
+.popup-pax-num { font-size: 19px; font-weight: bold; }
+.popup-pax-unit { font-size: 12px; }
 @media (max-width: 640px) {
   #legend {
     transform: scale(0.62);
@@ -43,6 +52,11 @@ body { font-family: 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif; }
     right: -2px;
   }
   #title-bar { font-size: 12px; padding: 6px 14px; }
+  .popup-name { font-size: 13px; }
+  .popup-tbl { font-size: 11px; }
+  .popup-pax-yr { font-size: 10px; }
+  .popup-pax-num { font-size: 15px; }
+  .popup-pax-unit { font-size: 10px; }
 }
 </style>
 </head>
@@ -147,23 +161,22 @@ stations.forEach(function(s) {
   })
   .bindTooltip(tooltipContent, tooltipOpts)
   .bindPopup(
-    '<div style="font-family:sans-serif;min-width:210px;">' +
-    '<div style="font-size:16px;font-weight:bold;border-bottom:2px solid #333;' +
-    'margin-bottom:7px;padding-bottom:4px;">' + esc(s.n) + '駅</div>' +
-    (s.m ? '<div style="color:#888;font-size:11px;margin-bottom:6px;">※複数事業者の乗降客数合算</div>' : '') +
-    '<table style="border-collapse:collapse;width:100%;font-size:13px;">' +
+    '<div class="popup-box">' +
+    '<div class="popup-name">' + esc(s.n) + '駅</div>' +
+    (s.m ? '<div class="popup-merged">※複数事業者の乗降客数合算</div>' : '') +
+    '<table class="popup-tbl">' +
     (s.m ? '' :
-      '<tr><td style="color:#666;padding:2px 8px 2px 0;white-space:nowrap;">運営会社</td>' +
+      '<tr><td class="popup-lbl">運営会社</td>' +
       '<td>' + esc(s.c) + '</td></tr>' +
-      '<tr><td style="color:#666;padding:2px 8px 2px 0;white-space:nowrap;">路線名</td>' +
+      '<tr><td class="popup-lbl">路線名</td>' +
       '<td>' + esc(s.r) + '</td></tr>'
     ) +
     '</table>' +
-    '<div style="margin-top:8px;border-top:1px solid #ddd;padding-top:6px;">' +
-    '<span style="color:#333;font-size:12px;">2024年 乗降客数</span><br>' +
-    '<span style="font-size:20px;font-weight:bold;">' + s.p.toLocaleString() + '</span>' +
-    '<span style="font-size:12px;"> 人/日</span></div></div>',
-    { maxWidth: 270 }
+    '<div class="popup-pax">' +
+    '<span class="popup-pax-yr">2024年 乗降客数</span><br>' +
+    '<span class="popup-pax-num">' + s.p.toLocaleString() + '</span>' +
+    '<span class="popup-pax-unit"> 人/日</span></div></div>',
+    { maxWidth: 220 }
   )
   .addTo(map);
   allMarkers.push({ marker: m, stepIdx: si });
