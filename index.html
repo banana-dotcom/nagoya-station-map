@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="utf-8">
@@ -31,6 +31,15 @@ body { font-family: 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif; }
   border: 1px solid rgba(0,0,0,0.18);
 }
 .leg-txt { font-size: 12px; white-space: nowrap; }
+@media (max-width: 640px) {
+  #legend {
+    transform: scale(0.62);
+    transform-origin: bottom right;
+    bottom: 5px;
+    right: -2px;
+  }
+  #title-bar { font-size: 12px; padding: 6px 14px; }
+}
 </style>
 </head>
 <body>
