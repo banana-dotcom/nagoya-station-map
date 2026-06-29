@@ -207,9 +207,10 @@ stations.slice().sort(function(a, b) { return a.p - b.p; }).forEach(function(s) 
   )
   .addTo(map);
 
-  var paxHtml = s.p > 40000
-    ? ' <span class="stn-label-pax">(' + (Math.floor(s.p / 1000) / 10) + '万人)</span>'
-    : '';
+  var paxLabel = s.p >= 10000
+    ? (Math.floor(s.p / 1000) / 10) + '万人'
+    : s.p.toLocaleString() + '人';
+  var paxHtml = ' <span class="stn-label-pax">(' + paxLabel + ')</span>';
   var lbl = L.marker([s.la, s.lo], {
     icon: L.divIcon({
       className: 'stn-label',
