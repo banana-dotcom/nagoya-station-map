@@ -51,8 +51,7 @@ body { font-family: 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif; }
   background: none; border: none; box-shadow: none; padding: 0;
 }
 .stn-label-pax {
-  font-size: 10px; font-weight: normal; color: #c00; line-height: 1.3;
-  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+  font-size: 10px; font-weight: normal; color: #c00;
 }
 #search-box { position: fixed; top: 75px; left: 10px; z-index: 1000; width: 220px; }
 #search-input {
@@ -207,14 +206,13 @@ stations.slice().sort(function(a, b) { return a.p - b.p; }).forEach(function(s) 
   )
   .addTo(map);
 
-  var bigStn = s.p > 80000;
-  var paxStr = bigStn
-    ? '<div class="stn-label-pax">' + (Math.floor(s.p / 1000) / 10) + '万人</div>'
+  var paxHtml = s.p > 80000
+    ? ' <span class="stn-label-pax">(' + (Math.floor(s.p / 1000) / 10) + '万人)</span>'
     : '';
   var lbl = L.marker([s.la, s.lo], {
     icon: L.divIcon({
       className: 'stn-label',
-      html: esc(s.n) + paxStr,
+      html: esc(s.n) + paxHtml,
       iconAnchor: [-(radius + 4), 7],
       iconSize: null
     }),
@@ -227,10 +225,9 @@ stations.slice().sort(function(a, b) { return a.p - b.p; }).forEach(function(s) 
 
 // ── ラベル表示制御（ズーム14以上で駅名表示）──────────────────
 function updateLabels() {
-  var zoomShow = map.getZoom() >= LABEL_ZOOM;
+  var show = map.getZoom() >= LABEL_ZOOM;
   allItems.forEach(function(item) {
     if (!item.visible) return;
-    var show = zoomShow || item.data.p > 80000;
     if (show) { item.label.addTo(map); } else { map.removeLayer(item.label); }
   });
 }
@@ -242,7 +239,7 @@ function setItemVisible(item, show) {
   item.visible = show;
   if (show) {
     item.marker.addTo(map);
-    if (map.getZoom() >= LABEL_ZOOM || item.data.p > 80000) item.label.addTo(map);
+    if (map.getZoom() >= LABEL_ZOOM) item.label.addTo(map);
   } else {
     map.removeLayer(item.marker);
     map.removeLayer(item.label);
