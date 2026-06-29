@@ -19,7 +19,7 @@ body { font-family: 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif; }
 }
 #source-text { font-size: 10px; font-weight: normal; color: #666; margin-top: 3px; }
 #legend {
-  position: fixed; top: 60px; right: 10px;
+  position: fixed; bottom: 30px; right: 10px;
   background: rgba(255,255,255,0.93); padding: 12px 16px;
   border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.28);
   z-index: 1000; font-size: 12px;
@@ -71,8 +71,8 @@ body { font-family: 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif; }
 @media (max-width: 640px) {
   #legend {
     transform: scale(0.62);
-    transform-origin: top right;
-    top: 50px;
+    transform-origin: bottom right;
+    bottom: 20px;
     right: -2px;
   }
   #title-bar { font-size: 12px; padding: 6px 14px; }
@@ -138,7 +138,7 @@ var STEPS = [
   [     0, '#313695',  4]
 ];
 
-var map = L.map('map', { preferCanvas: true, zoomControl: false }).setView([35.18, 136.91], 10);
+var map = L.map('map', { preferCanvas: true, zoomControl: false }).setView([35.18, 136.91], 9);
 L.control.zoom({ position: 'bottomleft' }).addTo(map);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
