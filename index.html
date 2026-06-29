@@ -51,8 +51,9 @@ body { font-family: 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif; }
   background: none; border: none; box-shadow: none; padding: 0;
 }
 .stn-label-pax {
-  font-size: 10px; font-weight: normal; color: #c00;
+  font-size: 10px; font-weight: normal; color: #c00; display: none;
 }
+.show-pax .stn-label-pax { display: inline; }
 #search-box { position: fixed; top: 75px; left: 10px; z-index: 1000; width: 220px; }
 #search-input {
   width: 100%; padding: 8px 12px; border-radius: 6px;
@@ -225,7 +226,9 @@ stations.slice().sort(function(a, b) { return a.p - b.p; }).forEach(function(s) 
 
 // ── ラベル表示制御（ズーム14以上で駅名表示）──────────────────
 function updateLabels() {
-  var show = map.getZoom() >= LABEL_ZOOM;
+  var zoom = map.getZoom();
+  var show = zoom >= LABEL_ZOOM;
+  document.getElementById('map').classList.toggle('show-pax', zoom >= 14);
   allItems.forEach(function(item) {
     if (!item.visible) return;
     if (show) { item.label.addTo(map); } else { map.removeLayer(item.label); }
