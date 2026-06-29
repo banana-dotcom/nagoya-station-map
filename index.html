@@ -166,7 +166,7 @@ if (NAGOYA_BOUNDARY) {
 
 var allItems = [];
 var selectedSteps = new Set();
-var LABEL_ZOOM = 14;
+var LABEL_ZOOM = 13;
 
 function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -206,7 +206,7 @@ stations.slice().sort(function(a, b) { return a.p - b.p; }).forEach(function(s) 
   )
   .addTo(map);
 
-  var paxHtml = s.p > 80000
+  var paxHtml = s.p > 40000
     ? ' <span class="stn-label-pax">(' + (Math.floor(s.p / 1000) / 10) + '万人)</span>'
     : '';
   var lbl = L.marker([s.la, s.lo], {
